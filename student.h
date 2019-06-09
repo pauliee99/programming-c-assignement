@@ -42,4 +42,4 @@ list list_create(); // dimiourgia neas listas
 
 int list_isempty( list l ); // checks if list is empty
 
-void list_push_back( list l, char *name , int id);
+void list_push_back( list l, int id, char *name);

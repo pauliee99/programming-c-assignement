@@ -50,7 +50,7 @@ student* load(char *filename, list l)
     int fsize, plithos, i;
     student tmp;
     node currnode = l->head;
-    list_push_back(l, tmp.name, tmp.id);
+    list_push_back(l, tmp.id, tmp.name);
 
     for (int i=0; i<=l->size; i++){
         tmp.id = currnode->data.id;
@@ -81,8 +81,9 @@ int addStudent(student st, list l)
 {
     if (findStudent(st.id,l) != NULL){
         return 0;
-    }else{
-    list_push_back(l, st.id, st.name);
+    }
+    else {
+        list_push_back(l, st.id, st.name);
         return 0;
     }
 }
@@ -149,7 +150,7 @@ int list_isempty( list l )
         return 0;
 }
 
-void list_push_back( list l, char *name , int id){
+void list_push_back( list l, int id, char *name){
     node currnode = l->head;
     assert(currnode);
 	strcpy(currnode->data.name, currnode->next->data.name); //help
