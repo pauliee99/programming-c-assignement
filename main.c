@@ -15,6 +15,7 @@ int main()
     int ans;
     student tmp;
     list studlist;
+
     while( run ) {
         print_menu();
     do {
@@ -56,6 +57,7 @@ int main()
             scanf("%d", &tmp.id);
             if (tmp.id != NULL){
                 findStudent(tmp.id,studlist);
+                printf("%s", studlist->tmp.name);
             }
             else 
                 printf("student not fount :(\n");
@@ -74,8 +76,8 @@ int main()
         
         case '7':
             printf("give the id of the student you want to change:\n");
-            scanf("%d", tmp.id);
-            updateStudent(tmp.id,studlist);
+            scanf("%d", &tmp.id);
+            updateStudent(tmp,studlist); //its either that or tmp.id ( if i do that i will have to change the updatestudent)
             break;
 
         case '8':

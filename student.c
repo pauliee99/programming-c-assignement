@@ -88,22 +88,22 @@ int addStudent(student st, list l)
     }
 }
 
-student* findStudent(int id, list l)
+node findStudent(int id, list l)
 {
     node currnode = l->head;
     while (currnode != NULL){
         if (currnode->data.id == id){
             return currnode;
         }
+        currnode = currnode->next;
     }
-    return -1;
+    return NULL;
 }
 
 int deleteStudent(int pid, list l){
     //Doulebei mono gia ton proto foititi
-    int index = findStudent(pid, l);
-    if (index == -1){
-        printf("404 not found\n");
+    if (findStudent(pid, l) == NULL){
+        printf("student not found\n");
         return 0;
     }
     else {
@@ -115,13 +115,12 @@ int deleteStudent(int pid, list l){
 	    }
 	    free(l);
     }
-    
 }
 
 int updateStudent(student st, list l)
 {
     int i;
-    if (findStudent(st.id,l)== -1){
+    if (findStudent(st.id,l)== NULL){
         printf("the student id cound not be found...");
         return 0;
     }

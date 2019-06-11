@@ -32,7 +32,7 @@ void save(char *filename, list l); //αποθήκευση λίστας φοιτ�
 
 int addStudent(student st, list l); //προσθήκη νέου student
 
-student* findStudent(int id, list l); //αναζήτηση του student από το array με βάση το id 
+node findStudent(int id, list l); //αναζήτηση του student από το array με βάση το id 
 
 int deleteStudent(int pid, list l); //διαγραφή με βάση το st.id
 
