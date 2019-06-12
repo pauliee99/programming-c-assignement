@@ -1,6 +1,8 @@
 #include <stdio.h>
 
 #define MAXSTRING 80
+#define y 1
+#define n 0
 
 typedef struct{
    char name[MAXSTRING];
