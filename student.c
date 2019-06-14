@@ -6,19 +6,20 @@
 
 void printMenu()
 {
-    printf("\x1B[37m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\x1B[0m");
+    printf("\x1B[34m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\x1B[0m");
     printf("\n\x1B[31mChoose from 1 to 7:\n");
 
     printf("\x1B[36m");
     printf("1. Αποθήκευση λίστας φοιτητών σε αρχείο\n");
-    printf("2. Αναπαράσταση λίστας\n");
-    printf("3. Προσθήκη νέου student\n");
-    printf("4. Αναζήτηση του student από το array με βάση το id\n");
-    printf("5. Διαγραφή με βάση το id\n");
-    printf("6. Ανανέωση με βάση το id\n");
-    printf("7. Quit\n");
-    printf("\x1B[0m");
-    printf("\x1B[37m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\x1B[0m");
+    printf("2. Αναπαράσταση ενός φοιτητή\n");
+    printf("3. Αναπαράσταση λίστας\n");
+    printf("4. Προσθήκη νέου student\n");
+    printf("5. Αναζήτηση του student από το array με βάση το id\n");
+    printf("6. Διαγραφή με βάση το id\n");
+    printf("7. Ανανέωση με βάση το id\n");
+    printf("8. Quit\n");
+    printf("\x1B[34m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\x1B[0m");
+    printf("\n\x1B[0m");
 }
 
 void print(student st)
@@ -65,7 +66,7 @@ node findStudent(int id, list l)
 
 student* load(char *filename, list l)
 {
-    FILE* filest = fopen(filename, "r");
+    FILE* filest = fopen("filename.txt", "r");
     if (filest  == NULL){
         return NULL;
     }
@@ -76,14 +77,9 @@ student* load(char *filename, list l)
 
     int plithos = length / sizeof(student);
     student tmp;
-    //node currnode = l->head;
-    //list_push_back(l, tmp.id, tmp.name);
 
     for (int i=0; i<plithos; i++){
         fread(&tmp, sizeof(student), 1, filest);
-        //tmp.id = currnode->data.id;
-        //strcpy(currnode->data.name, tmp.name);
-        //currnode = currnode->next;
         addStudent(tmp, l);
     }
     fclose(filest);
@@ -92,7 +88,7 @@ student* load(char *filename, list l)
 
 void save(char *filename, list l) 
 {
-    FILE* filest = fopen(filename, "w");
+    FILE* filest = fopen("filename.txt", "w");
 
     if (filest == NULL){
         printf("failed to save any changes");
@@ -112,18 +108,20 @@ void save(char *filename, list l)
 }
 
 int deleteStudent(int pid, list l){
-
+    node currnode = l->head;
     if (findStudent(pid, l) == NULL){
         printf("student not found\n");
         return 0;
     }
     else {
         while (l->size != 0){
-		    node secondNode = l->head->next;
-		    free(l->head);
-		    l->head = secondNode;
-		    l->size--;
-	    }
+            if(currnode->data.id == pid){
+                node currnode = l->head->next;
+                free(l->head);
+                l->head = currnode;
+                l->size--;
+            }
+        }
 	    free(l);
     }
 }
@@ -133,9 +131,8 @@ int updateStudent(student st, list l)
     node currnode;
     currnode = findStudent(st.id,l);
 
-    int i;
     if (currnode == NULL){
-        printf("the student id cound not be found...");
+        printf("the student id could not be found...\n");
         return 0;
     }
     else {
@@ -166,7 +163,6 @@ int list_isempty( list l )
 
 void list_push_back( list l, int id, char *name){
     node newNode = (node)malloc(sizeof(struct nodeR));
-	node tmp;
     strcpy(newNode->data.name,name);
     newNode->data.id =id;
     newNode->next = NULL;
@@ -178,31 +174,7 @@ void list_push_back( list l, int id, char *name){
 	else {
         l->tail->next = newNode;
 		l->tail = newNode;
-        /*
-        tmp = l->tail;
-        l->tail = currnode;
-		l->tail->next = NULL;
-        tmp->next = currnode;*/
     }
 
     l->size++;	
 }
-/*
-void list_push_back( list l, char *name )
-{
-	node currnode = malloc(sizeof(struct nodeR));
-	assert(currnode);
-	strcpy(currnode->name, name);
-	currnode->next = NULL;
-
-	if (list_isempty(l)){
-		l->head = currnode;
-		l->tail = currnode;
-	}
-	else {
-		l->tail->next = currnode;
-		l->tail = currnode;
-	}
-
-	l->size++;
-}*/

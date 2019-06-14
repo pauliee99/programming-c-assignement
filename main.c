@@ -18,32 +18,42 @@ int main(int argc, char **argv)
     load(argv[1],studlist);
 
     char choice;
-    char ans;
+    char ans,ans1;
     student tmp;
  
     int run = 1;
     while( run ) {
         printMenu();
-
-        do {
+        
+        do{
             printf("choice: ");
-            scanf("%c", &choice);
-            printf("\n");
-        } while( choice < '1' || choice > '7' );
+            scanf("%s", &choice);
+            printf("\n"); 
+            if (choice < '1' || choice > '8'){
+                printf("wrong input. try again...\n");
+            }
+        }while( choice < '1' || choice > '8' );
 
         switch( choice ) {
-            case '1':
+            case '1': // save list
                 printf("are you sure you want to save the list? [y/n]\n");
                 scanf("%s", &ans);
-                if (ans == 'y')
+                if (ans == 'y'){
                     save(argv[1],studlist); 
+                }
                 break;
 
             case '2':
+                printf("give student's id: ");
+                scanf("%d", &tmp.id);
+                print(tmp);
+                break;
+
+            case '3': // print list
                 printstudents(studlist);
                 break;
 
-            case '3':
+            case '4': // add student
                 strcpy(tmp.name, "");
                 tmp.id = 0;
                 printf("give students name:\n");
@@ -52,19 +62,21 @@ int main(int argc, char **argv)
                 scanf("%d", &tmp.id);
                 addStudent(tmp, studlist);
                 printf("students added succesfully :)\n");
+                save(argv[1], studlist);
                 break;
 
-            case '4':
+            case '5': // find student
                 printf("give a student's id\n");
                 scanf("%d", &tmp.id);
                 if (findStudent(tmp.id,studlist) != NULL){
-                    printf("%s\n", tmp.name);
+                    findStudent(tmp.id,studlist);
+                    printf("the student with id=%d is:%s\n",tmp.id, findStudent(tmp.id,studlist)->data.name);
                 }
                 else 
                     printf("student not fount :(\n");
                 break;
 
-            case '5':
+            case '6': // delete student
                 printf("give student id you want to exterminate\n");
                 scanf("%d", &tmp.id);
                 deleteStudent(tmp.id,studlist);
@@ -75,34 +87,26 @@ int main(int argc, char **argv)
                     printf("student succesfully removed from the equation\n");
                 break;
             
-            case '6':
+            case '7': // update student
                 printf("give the id of the student you want to change:\n");
                 scanf("%d", &tmp.id);
                 updateStudent(tmp,studlist); //its either that or tmp.id ( if i do that i will have to change the updatestudent)
                 break;
 
-            case '7':
+            case '8': // quit
                 printf("you are about to exit the progrmam. Do you want to save any chances? [y/n]\n");
-                scanf("%s", &ans);
-                if ( ans == 'n'){
+                scanf("%s", &ans1);
+                if ( ans1 == 'y'){
                     save(argv[1], studlist);
-                    break;
-                }
-                else {
                     run=0;
                     break;
                 }
-            
-            default:
-                while (choice < '1' || choice > '7'){
-                    printf("wrong input. try again:\n");
-                    printf("choice: ");
-                    scanf("%c", &choice);
-                    printf("\n");
+                else {
+                    break;
                 }
-            //end of case
-            }
-        //end of switch
-        }
+
+        };//end of switch
+
+    }//end of while
     return 0;
 }
