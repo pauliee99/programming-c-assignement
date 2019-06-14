@@ -11,23 +11,20 @@ void printMenu()
 
     printf("\x1B[36m");
     printf("1. Αποθήκευση λίστας φοιτητών σε αρχείο\n");
-    printf("2. Αναπαράσταση ενός φοιτητή\n");
-    printf("3. Αναπαράσταση λίστας\n");
-    printf("4. Προσθήκη νέου student\n");
-    printf("5. Αναζήτηση του student από το array με βάση το id\n");
-    printf("6. Διαγραφή με βάση το id\n");
-    printf("7. Ανανέωση με βάση το id\n");
-    printf("8. Quit\n");
+    printf("2. Αναπαράσταση λίστας\n");
+    printf("3. Προσθήκη νέου student\n");
+    printf("4. Αναζήτηση του student από το array με βάση το id\n");
+    printf("5. Διαγραφή με βάση το id\n");
+    printf("6. Ανανέωση με βάση το id\n");
+    printf("7. Quit\n");
     printf("\x1B[34m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\x1B[0m");
     printf("\n\x1B[0m");
 }
 
 void print(student st)
 {
-    //printf("the student is:\n");
     printf("%d\t", st.id);
     printf("%s\n", st.name);
-    
 }
 
 void printstudents(list l)
@@ -107,22 +104,26 @@ void save(char *filename, list l)
     fclose(filest);
 }
 
-int deleteStudent(int pid, list l){
-    node currnode = l->head;
+int deleteStudent(int pid, list l)
+{
+
     if (findStudent(pid, l) == NULL){
-        printf("student not found\n");
+        printf("student could not be found\n");
         return 0;
     }
     else {
+        node currnode = (l->head)->next;
+        node previous = l->head;
         while (l->size != 0){
             if(currnode->data.id == pid){
-                node currnode = l->head->next;
-                free(l->head);
-                l->head = currnode;
-                l->size--;
+                node temp = currnode;
+                previous->next = currnode->next;
+                free(temp);
+                return 0;
             }
+            previous = currnode;
+            currnode = currnode->next;
         }
-	    free(l);
     }
 }
 
@@ -177,4 +178,15 @@ void list_push_back( list l, int id, char *name){
     }
 
     l->size++;	
+}
+
+void list_destroy( list l )
+{
+    while (l->size != 0){
+		node secondNode = l->head->next;
+		free(l->head);
+		l->head = secondNode;
+		l->size--;
+	}
+	free(l);
 }

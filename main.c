@@ -29,10 +29,10 @@ int main(int argc, char **argv)
             printf("choice: ");
             scanf("%s", &choice);
             printf("\n"); 
-            if (choice < '1' || choice > '8'){
+            if (choice < '1' || choice > '7'){
                 printf("wrong input. try again...\n");
             }
-        }while( choice < '1' || choice > '8' );
+        }while( choice < '1' || choice > '7' );
 
         switch( choice ) {
             case '1': // save list
@@ -43,17 +43,11 @@ int main(int argc, char **argv)
                 }
                 break;
 
-            case '2':
-                printf("give student's id: ");
-                scanf("%d", &tmp.id);
-                print(tmp);
-                break;
-
-            case '3': // print list
+            case '2': // print list
                 printstudents(studlist);
                 break;
 
-            case '4': // add student
+            case '3': // add student
                 strcpy(tmp.name, "");
                 tmp.id = 0;
                 printf("give students name:\n");
@@ -61,47 +55,46 @@ int main(int argc, char **argv)
                 printf("give student id:\n");
                 scanf("%d", &tmp.id);
                 addStudent(tmp, studlist);
-                printf("students added succesfully :)\n");
+                printf("student added succesfully :)\n");
                 save(argv[1], studlist);
                 break;
 
-            case '5': // find student
+            case '4': // find student
                 printf("give a student's id\n");
                 scanf("%d", &tmp.id);
                 if (findStudent(tmp.id,studlist) != NULL){
                     findStudent(tmp.id,studlist);
-                    printf("the student with id=%d is:%s\n",tmp.id, findStudent(tmp.id,studlist)->data.name);
+                    printf("the student with id = %d is: %s\n",tmp.id, findStudent(tmp.id,studlist)->data.name);
                 }
                 else 
                     printf("student not fount :(\n");
                 break;
 
-            case '6': // delete student
+            case '5': // delete student
                 printf("give student id you want to exterminate\n");
                 scanf("%d", &tmp.id);
                 deleteStudent(tmp.id,studlist);
-                if (deleteStudent(tmp.id,studlist) == 0){
-                    printf("student could not be found\n");
-                }
-                else 
-                    printf("student succesfully removed from the equation\n");
+                printf("student succesfully removed from the equation\n");
+                save(argv[1], studlist);
                 break;
             
-            case '7': // update student
+            case '6': // update student
                 printf("give the id of the student you want to change:\n");
                 scanf("%d", &tmp.id);
                 updateStudent(tmp,studlist); //its either that or tmp.id ( if i do that i will have to change the updatestudent)
                 break;
 
-            case '8': // quit
+            case '7': // quit
                 printf("you are about to exit the progrmam. Do you want to save any chances? [y/n]\n");
                 scanf("%s", &ans1);
                 if ( ans1 == 'y'){
                     save(argv[1], studlist);
+                    list_destroy(studlist);
                     run=0;
                     break;
                 }
                 else {
+                    list_destroy(studlist);
                     break;
                 }
 

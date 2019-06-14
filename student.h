@@ -1,4 +1,5 @@
-#include <stdio.h>
+#ifndef STUDENT_H
+#define STUDENT_H
 
 #define MAXSTRING 80
 #define y 1
@@ -45,3 +46,7 @@ list list_create(); // dimiourgia neas listas
 int list_isempty( list l ); // checks if list is empty
 
 void list_push_back( list l, int id, char *name);
+
+void list_destroy( list l );
+
+#endif
