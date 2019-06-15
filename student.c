@@ -180,13 +180,23 @@ void list_push_back( list l, int id, char *name){
     l->size++;	
 }
 
+/*
 void list_destroy( list l )
 {
     while (l->size != 0){
-		node secondNode = l->head->next;
+        node currnode = l->head->next;
 		free(l->head);
-		l->head = secondNode;
+		l->head = currnode;
 		l->size--;
+	}
+	free(l);
+}*/
+void list_destroy(list l){
+	node curnode = l->head;
+	while (curnode != NULL){
+		struct nodeR* tmp = curnode->next;
+		free(curnode);
+		curnode = tmp;
 	}
 	free(l);
 }

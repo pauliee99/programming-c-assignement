@@ -71,7 +71,7 @@ int main(int argc, char **argv)
                 break;
 
             case '5': // delete student
-                printf("give student id you want to exterminate\n");
+                printf("give student id you want to remove\n");
                 scanf("%d", &tmp.id);
                 deleteStudent(tmp.id,studlist);
                 printf("student succesfully removed from the equation\n");
